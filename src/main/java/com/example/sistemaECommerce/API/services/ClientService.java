@@ -45,34 +45,32 @@ public class ClientService {
     }
 
     public ClientDTO getClient(String cpf) {
-        ClientEntity existingCpf = repository.findByCpf(cpf);
-        if (existingCpf == null) {
-            throw new ClientNotFoundException("Cliente não encontrado com o CPF: " + cpf);
-        }
-
+        ClientEntity client = findClientByCpf(cpf);
         return new ClientDTO(
-                existingCpf.getId(),
-                existingCpf.getName(),
-                existingCpf.getCpf(),
-                existingCpf.getEmail()
+                client.getId(),
+                client.getName(),
+                client.getCpf(),
+                client.getEmail()
         );
     }
 
     public ClientDTO updateClient(String cpf, ClientUpdateDTO updatedClient) {
-        ClientEntity existingCpf = repository.findByCpf(cpf);
-        if (existingCpf == null) {
-            throw new ClientNotFoundException("Cliente não encontrado com o CPF: " + cpf);
-        }
-
-        existingCpf.setName(updatedClient.name());
-        existingCpf.setEmail(updatedClient.email());
-
-        ClientEntity savedEntity = repository.save(existingCpf);
+        ClientEntity client = findClientByCpf(cpf);
+        client.setName(updatedClient.name());
+        client.setEmail(updatedClient.email());
+        ClientEntity savedEntity = repository.save(client);
         return new ClientDTO(
                 savedEntity.getId(),
                 savedEntity.getName(),
                 savedEntity.getCpf(),
                 savedEntity.getEmail()
         );
+    }
+    private ClientEntity findClientByCpf(String cpf) {
+        ClientEntity client = repository.findByCpf(cpf);
+        if (client == null) {
+            throw new ClientNotFoundException("Cliente não encontrado com o CPF: " + cpf);
+        }
+        return client;
     }
 }
