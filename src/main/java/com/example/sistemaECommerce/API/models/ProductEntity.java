@@ -50,5 +50,7 @@ public class ProductEntity {
     public Integer getQuantity() {
         return quantity;
     }
-
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
