@@ -7,13 +7,14 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 @Entity
-@Table(name="produtos")
+@Table(name="products")
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "O nome é obrigatório")
+    @Column(unique = true)
     private String name;
 
     @NotNull(message = "O preço é obrigatório")
