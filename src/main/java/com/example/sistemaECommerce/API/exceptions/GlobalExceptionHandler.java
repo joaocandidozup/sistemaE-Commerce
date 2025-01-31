@@ -43,6 +43,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    @ExceptionHandler(ClientAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleClientAlreadyExistsException(ClientAlreadyExistsException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("erro", ex.getMessage());
+
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGenericException(Exception ex) {
