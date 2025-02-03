@@ -30,6 +30,9 @@ public class ProductService {
                 productDTO.name(),
                 productDTO.price(),
                 productDTO.quantity());
+        if(entity.getQuantity()< 0){
+            throw new IllegalArgumentException("A quantidade deve ser um número inteiro maior ou igual a 0");
+        }
 
         ProductEntity savedEntity = repository.save(entity);
         return new ProductDTO(
